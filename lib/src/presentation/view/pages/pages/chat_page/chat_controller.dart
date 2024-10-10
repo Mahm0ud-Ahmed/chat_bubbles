@@ -15,6 +15,7 @@ class ChatController implements AppPageController {
   late final ScrollController scrollController;
   String? userId;
   String? oldKey;
+  late bool isTyping;
 
   @override
   void initDependencies({BuildContext? context}) {
