@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "974619505215",
+    "project_id": "chatbubbles-c09b5",
+    "storage_bucket": "chatbubbles-c09b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974619505215:android:a9821e3779f63f213d7e8a",
+        "android_client_info": {
+          "package_name": "com.ex.chatbubbles.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZJObiEPHlf7OpeZmbgPIfPMTbDsnCznk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
