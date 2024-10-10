@@ -93,7 +93,6 @@ extension StringServices on String? {
 
 extension AppColorTheme on ThemeColor {
   Color get color {
-    print('-=-=--=-=-=-=-=-=-=-=-=-=-=');
     return SettingService().theme.currentTheme.appColor[this]!;
   }
 }
