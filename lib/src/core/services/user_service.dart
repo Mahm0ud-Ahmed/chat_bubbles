@@ -13,7 +13,7 @@ import 'service_interface.dart';
 import 'storage_service.dart';
 
 // Flutter imports:
-import 'package:flutter/material.dart' show ChangeNotifier;
+import 'package:flutter/material.dart' show AppLifecycleListener, ChangeNotifier;
 
 class UserService extends ChangeNotifier implements ServiceInterface {
   @override
@@ -24,6 +24,7 @@ class UserService extends ChangeNotifier implements ServiceInterface {
   static final StorageService _storage = injector<StorageService>();
 
   AuthCubit? authCubit;
+  AppLifecycleListener? _listener;
 
   @override
   Future<void> initializeService() async {
@@ -32,9 +33,11 @@ class UserService extends ChangeNotifier implements ServiceInterface {
     try {
       if (userData.isNotNull) {
         _user = UserModel.fromJson(jsonDecode(userData!));
+        updateUser(true);
       } else {
         _user = null;
       }
+      initAppListener();
       AppLogger.logDebug('$name Success initialization');
       AppLogger.logInfo('User: ${_user?.toJson()}');
       notifyListeners();
@@ -60,6 +63,26 @@ class UserService extends ChangeNotifier implements ServiceInterface {
       _storage.remove(kUserData),
       UserService().initializeService(),
     ]);
+  }
+
+  void initAppListener() {
+    _listener ??= AppLifecycleListener(
+      onShow: () => updateUser(true),
+      onRestart: () => updateUser(true),
+      onHide: () => updateUser(false),
+      onPause: () => updateUser(false),
+      onDetach: () => updateUser(false),
+    );
+  }
+
+  // update user state and last active
+  void updateUser(bool? isOnline) {
+    if (isExistUser) {
+      authCubit?.updateUser({
+        'online_status': isOnline,
+        'last_active': DateTime.now().toIso8601String(),
+      });
+    }
   }
 
   static UserModel? get currentUser => _user;

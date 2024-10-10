@@ -125,6 +125,7 @@ class FirebaseAuthentication {
       // Update user status before logging out
       await updateUser({
         'online_status': false,
+        'last_active': DateTime.now().toIso8601String(),
       });
 
       // Sign out the current user from Firebase Auth

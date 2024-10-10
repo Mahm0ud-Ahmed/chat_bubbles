@@ -55,6 +55,7 @@ class _ChatPageState extends State<ChatPage> {
           child: AppBar(
             backgroundColor: ThemeColor.cardPrimary.color,
             elevation: 0,
+            leadingWidth: 32,
             title: StreamBuilder<DataState<UserModel>>(
               stream: chatController.chatCubit.getOtherUser(chatController.userId!),
               builder: (BuildContext context, AsyncSnapshot<DataState<UserModel>> snapshot) {
@@ -68,17 +69,28 @@ class _ChatPageState extends State<ChatPage> {
                   success: (data) {
                     return Row(
                       children: [
-                        ClipOval(
-                          child: ImageWidget(
-                            image: data.avatar,
-                            width: 32,
-                            height: 32,
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: data.onlineStatus! ? context.customColors.successColor : Colors.transparent,
+                                width: 1),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ClipOval(
+                              child: ImageWidget(
+                                image: data.avatar,
+                                width: 32,
+                                height: 32,
+                              ),
+                            ),
                           ),
                         ),
                         .02.space(context).w,
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, 
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextWidget(text: data.userName),
