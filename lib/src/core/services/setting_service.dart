@@ -12,7 +12,7 @@ class SettingService extends ChangeNotifier implements ServiceInterface {
   @override
   String get name => "Setting Service [Theme - Language]";
 
-  ThemeManager? _theme ;
+  ThemeManager? _theme;
 
   ThemeManager get theme => _theme!;
 
@@ -20,9 +20,9 @@ class SettingService extends ChangeNotifier implements ServiceInterface {
 
   @override
   Future<void> initializeService() async {
-    await S.load(locale);
     _theme ??= ThemeManager();
     await _theme?.load();
+    await S.load(locale);
 
     AppLogger.logDebug('$name Success initialization');
     AppLogger.logInfo('Theme is: $stateMod');

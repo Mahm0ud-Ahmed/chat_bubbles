@@ -25,9 +25,9 @@ class MainApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: S.current.app_name,
-            theme: setting.theme.currentTheme.themeData(),
-            darkTheme: setting.theme.currentTheme.themeData(),
-            themeMode: setting.theme.currentTheme.mode,
+            theme: setting.theme.theme,
+            darkTheme: setting.theme.theme,
+            themeMode: SettingService.stateMod,
             locale: setting.locale,
             initialRoute: AppRoute.splash.route,
             onGenerateRoute: RouterService().onGenerateRoute,

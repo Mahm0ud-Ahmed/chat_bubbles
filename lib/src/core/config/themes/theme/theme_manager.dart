@@ -25,7 +25,7 @@ class ThemeManager {
   }
 
   void initTheme() {
-    theme = currentTheme.themeData();
+    theme = currentTheme.themeData(getTextTheme(currentTheme.defaultTextColor));
     _setSystemStatusDefaultColor();
     mode = currentTheme.mode;
   }
@@ -92,6 +92,72 @@ class ThemeManager {
 
   void systemNavigationController({SystemUiMode? mode}) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+  }
+  // static AppColors get colors => _instance!.currentTheme.themeData().extension<AppColors>()!;
+  TextTheme getTextTheme(Color textColor) {
+    return TextTheme(
+      headlineSmall: TextStyle(
+        color: textColor,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      headlineMedium: TextStyle(
+        color: textColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      headlineLarge: TextStyle(
+        color: textColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 28,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      bodyLarge: TextStyle(
+        color: textColor,
+        fontSize: 16,
+        // height: 1.2,
+        // letterSpacing: .2,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      bodyMedium: TextStyle(
+        color: textColor,
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      bodySmall: TextStyle(
+        color: textColor,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      labelLarge: TextStyle(
+        color: textColor,
+        fontSize: 12,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      labelMedium: TextStyle(
+        color: textColor,
+        fontSize: 10,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+      labelSmall: TextStyle(
+        color: textColor,
+        fontSize: 8,
+        fontFamily: "Inter",
+        overflow: TextOverflow.visible,
+      ),
+    );
   }
 
   static ThemeManager? _instance;

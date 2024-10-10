@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Project imports:
 import '../../../utils/enums.dart';
 import '../i_theme.dart';
+import 'app_color.dart';
 
 class LightTheme implements ITheme {
   @override
@@ -34,9 +35,26 @@ class LightTheme implements ITheme {
   ThemeMode get mode => ThemeMode.light;
 
   @override
-  ThemeData themeData() {
+  ThemeData themeData(TextTheme textTheme) {
     return ThemeData.light(useMaterial3: true).copyWith(
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: scaffoldColor),
+      extensions: [
+        AppColors(
+          base: appColor[ThemeColor.base]!,
+          reverseBase: appColor[ThemeColor.reverseBase]!,
+          primary: appColor[ThemeColor.primary]!,
+          secondary: appColor[ThemeColor.secondary]!,
+          textPrimary: appColor[ThemeColor.textPrimary]!,
+          textAccent: appColor[ThemeColor.textAccent]!,
+          textSecondary: appColor[ThemeColor.textSecondary]!,
+          cardPrimary: appColor[ThemeColor.cardPrimary]!,
+          cardSecondary: appColor[ThemeColor.cardSecondary]!,
+          successColor: appColor[ThemeColor.successColor]!,
+          errorColor: appColor[ThemeColor.errorColor]!,
+          warningColor: appColor[ThemeColor.warningColor]!,
+          systemUiOverlayStyle: systemUiOverlayStyle
+        ),
+      ],
       appBarTheme: AppBarTheme(
         backgroundColor: scaffoldColor,
         elevation: 0,
@@ -52,7 +70,7 @@ class LightTheme implements ITheme {
       scaffoldBackgroundColor: scaffoldColor,
       cardColor: appColor[ThemeColor.cardPrimary],
       //Text Theme
-      textTheme: getTextTheme(appColor[ThemeColor.reverseBase]!),
+      textTheme: textTheme,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
             foregroundColor: appColor[ThemeColor.textPrimary], overlayColor: appColor[ThemeColor.primary]),
@@ -82,79 +100,13 @@ class LightTheme implements ITheme {
   SystemUiOverlayStyle get systemUiOverlayStyle => SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: appColor[ThemeColor.base],
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarContrastEnforced: true,
         systemStatusBarContrastEnforced: true,
       );
-
-  TextTheme getTextTheme(Color textColor) {
-    return TextTheme(
-      headlineSmall: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.w500,
-        fontSize: 18,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      headlineMedium: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      headlineLarge: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 28,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      bodyLarge: TextStyle(
-        color: textColor,
-        fontSize: 16,
-        // height: 1.2,
-        // letterSpacing: .2,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      bodyMedium: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.w400,
-        fontSize: 14,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      bodySmall: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.w500,
-        fontSize: 12,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      labelLarge: TextStyle(
-        color: textColor,
-        fontSize: 12,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      labelMedium: TextStyle(
-        color: textColor,
-        fontSize: 10,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-      labelSmall: TextStyle(
-        color: textColor,
-        fontSize: 8,
-        fontFamily: "Inter",
-        overflow: TextOverflow.visible,
-      ),
-    );
-  }
 
   @override
   Color get defaultTextColor => appColor[ThemeColor.reverseBase]!;

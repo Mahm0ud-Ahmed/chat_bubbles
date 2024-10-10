@@ -5,6 +5,7 @@ import 'package:chat_bubbles/src/core/utils/constant.dart';
 import 'package:chat_bubbles/src/core/utils/enums.dart';
 
 import '../config/l10n/generated/l10n.dart';
+import '../config/themes/theme/app_color.dart';
 import '../services/setting_service.dart';
 
 extension SizeBox on num? {
@@ -46,6 +47,8 @@ extension ContextServices on BuildContext {
 
   S get localText => S.of(this);
 
+  AppColors get customColors => Theme.of(this).extension<AppColors>()!;
+
   TextStyle? get headlineL => Theme.of(this).textTheme.headlineLarge;
   TextStyle? get headlineM => Theme.of(this).textTheme.headlineMedium;
   TextStyle? get headlineS => Theme.of(this).textTheme.headlineSmall;
@@ -61,7 +64,6 @@ extension ContextServices on BuildContext {
   TextStyle? get labelL => Theme.of(this).textTheme.labelLarge;
   TextStyle? get labelM => Theme.of(this).textTheme.labelMedium;
   TextStyle? get labelS => Theme.of(this).textTheme.labelSmall;
-
 
   void popWidget<T>({T? value}) => Navigator.pop<T>(this, value);
   Future<T?> nextNamed<T>(String name, {Object? argument}) async =>
@@ -82,7 +84,7 @@ extension StringServices on String? {
     return null;
   }
 
-  String? get validatePassword{
+  String? get validatePassword {
     if (!isNotNull) return 'Password is required';
     if (this!.length < 6) return 'Password must be at least 6 characters';
     return null;
@@ -90,5 +92,8 @@ extension StringServices on String? {
 }
 
 extension AppColorTheme on ThemeColor {
-  Color get color => SettingService().theme.currentTheme.appColor[this]!;
+  Color get color {
+    print('-=-=--=-=-=-=-=-=-=-=-=-=-=');
+    return SettingService().theme.currentTheme.appColor[this]!;
+  }
 }
