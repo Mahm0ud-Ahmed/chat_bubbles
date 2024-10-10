@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:flutter/material.dart' show Color;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
@@ -8,8 +8,8 @@ import '../i_theme.dart';
 
 class DarkTheme implements ITheme {
 
-  // @override
-  // String get themeName => 'Dark Theme';
+  @override
+  String get themeName => 'Dark Theme';
 
   @override
   Color get scaffoldColor => appColor[ThemeColor.base]!;
@@ -32,7 +32,7 @@ class DarkTheme implements ITheme {
         ThemeColor.warningColor:            const Color(0xFFFB8A00),
       };
 
-  /* @override
+   @override
   ThemeMode get mode => ThemeMode.dark;
 
   @override
@@ -50,6 +50,9 @@ class DarkTheme implements ITheme {
         cursorColor: appColor[ThemeColor.primary],
         selectionColor: appColor[ThemeColor.secondary],
         selectionHandleColor: appColor[ThemeColor.secondary],
+      ),
+      listTileTheme: ListTileThemeData(
+        tileColor: appColor[ThemeColor.cardPrimary],
       ),
       scaffoldBackgroundColor: scaffoldColor,
       cardColor: appColor[ThemeColor.cardPrimary],
@@ -145,5 +148,8 @@ class DarkTheme implements ITheme {
         overflow: TextOverflow.visible,
       ),
     );
-  } */
+  }
+  
+  @override
+  Color get defaultTextColor => appColor[ThemeColor.reverseBase]!;
 }

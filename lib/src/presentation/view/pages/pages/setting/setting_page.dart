@@ -1,3 +1,5 @@
+import 'package:chat_bubbles/src/core/config/themes/theme/dark_theme.dart';
+import 'package:chat_bubbles/src/core/config/themes/theme/light_theme.dart';
 import 'package:chat_bubbles/src/core/services/setting_service.dart';
 import 'package:chat_bubbles/src/core/services/user_service.dart';
 import 'package:chat_bubbles/src/core/utils/enums.dart';
@@ -43,7 +45,7 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             children: [
               ListenableBuilder(
-                listenable: injector<SettingService>().theme,
+                listenable: injector<SettingService>(),
                 builder: (context, _) {
                   return SwitchListTile(
                     value: SettingService.isDark,
@@ -51,10 +53,10 @@ class _SettingPageState extends State<SettingPage> {
                     onChanged: (value) {
                       switch (value) {
                         case true:
-                          injector<SettingService>().changeTheme(theme: SupportTheme.dark);
+                          injector<SettingService>().changeTheme(theme: DarkTheme());
                           break;
                         case false:
-                          injector<SettingService>().changeTheme(theme: SupportTheme.light);
+                          injector<SettingService>().changeTheme(theme: LightTheme());
                           break;
                         default:
                       }

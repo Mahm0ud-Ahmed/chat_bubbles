@@ -4,7 +4,6 @@ import 'package:overlay_support/overlay_support.dart';
 
 import 'src/core/config/injector.dart';
 import 'src/core/config/l10n/generated/l10n.dart';
-import 'src/core/config/themes/theme/theme_manager.dart';
 import 'src/core/services/router_service.dart';
 import 'src/core/utils/enums.dart';
 
@@ -21,14 +20,14 @@ class MainApp extends StatelessWidget {
     final setting = SettingService();
     return OverlaySupport.global(
       child: ListenableBuilder(
-        listenable: setting.theme,
+        listenable: setting,
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: S.current.app_name,
-            theme: ThemeManager.myTheme,
-            darkTheme: ThemeManager.myTheme,
-            themeMode: ThemeManager.mode,
+            theme: setting.theme.currentTheme.themeData(),
+            darkTheme: setting.theme.currentTheme.themeData(),
+            themeMode: setting.theme.currentTheme.mode,
             locale: setting.locale,
             initialRoute: AppRoute.splash.route,
             onGenerateRoute: RouterService().onGenerateRoute,

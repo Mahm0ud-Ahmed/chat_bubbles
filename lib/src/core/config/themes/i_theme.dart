@@ -1,14 +1,17 @@
 // Flutter imports:
-import 'package:flutter/material.dart' show Color;
+import 'package:flutter/material.dart' show Color, ThemeData, ThemeMode;
 import 'package:flutter/services.dart';
 
 // Project imports:
 import '../../utils/enums.dart';
 
 abstract interface class ITheme {
-  ITheme._();
+  String get themeName;
+  Color get defaultTextColor;
+  SystemUiOverlayStyle get systemUiOverlayStyle;
+  ThemeMode get mode;
+  ThemeData themeData();
   Color get scaffoldColor;
 
-  // Map<ThemeTextStyle, TextStyle> get appStyle;
   Map<ThemeColor, Color> get appColor;
 }

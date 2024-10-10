@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show Color;
+import 'package:flutter/material.dart';
 
 // Flutter imports:
 import 'package:flutter/services.dart';
@@ -8,8 +8,8 @@ import '../../../utils/enums.dart';
 import '../i_theme.dart';
 
 class LightTheme implements ITheme {
-  // @override
-  // String get themeName => 'Light Theme';
+  @override
+  String get themeName => 'Light Theme';
 
   @override
   Color get scaffoldColor => appColor[ThemeColor.base]!;
@@ -30,12 +30,12 @@ class LightTheme implements ITheme {
         ThemeColor.warningColor: const Color(0xFFFB8A00),
       };
 
-  /* @override
+  @override
   ThemeMode get mode => ThemeMode.light;
 
   @override
   ThemeData themeData() {
-return ThemeData.light(useMaterial3: true).copyWith(
+    return ThemeData.light(useMaterial3: true).copyWith(
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: scaffoldColor),
       appBarTheme: AppBarTheme(
         backgroundColor: scaffoldColor,
@@ -54,10 +54,15 @@ return ThemeData.light(useMaterial3: true).copyWith(
       //Text Theme
       textTheme: getTextTheme(appColor[ThemeColor.reverseBase]!),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: appColor[ThemeColor.textPrimary], overlayColor: appColor[ThemeColor.primary]),
+        style: TextButton.styleFrom(
+            foregroundColor: appColor[ThemeColor.textPrimary], overlayColor: appColor[ThemeColor.primary]),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(backgroundColor: appColor[ThemeColor.secondary], overlayColor: appColor[ThemeColor.primary]),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: appColor[ThemeColor.secondary], overlayColor: appColor[ThemeColor.primary]),
+      ),
+      listTileTheme: ListTileThemeData(
+        tileColor: appColor[ThemeColor.cardPrimary],
       ),
       colorScheme: ColorScheme(
         brightness: Brightness.light,
@@ -149,5 +154,8 @@ return ThemeData.light(useMaterial3: true).copyWith(
         overflow: TextOverflow.visible,
       ),
     );
-  } */
+  }
+
+  @override
+  Color get defaultTextColor => appColor[ThemeColor.reverseBase]!;
 }
