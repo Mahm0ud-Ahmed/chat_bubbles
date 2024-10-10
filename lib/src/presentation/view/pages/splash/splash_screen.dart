@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:chat_bubbles/src/core/services/user_service.dart';
-import 'package:chat_bubbles/src/presentation/view/common/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import '../../../../core/config/injector.dart';
@@ -26,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 4),
       () {
-        // context.nextReplacementNamed(AppRoute.login.route);
         if(UserService.isExistUser){
           context.nextReplacementNamed(AppRoute.allChats.route);
         }else {
@@ -43,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
         showAppBar: false,
         // backgroundColor: ThemeColor.base.color,
         builder: (context, info) {
-          return TextWidget(text: 'Splash');
+          return Icon(FontAwesomeIcons.rocketchat, size: 100, color: ThemeColor.secondary.color);
         });
   }
 }
