@@ -51,14 +51,10 @@ class _SettingPageState extends State<SettingPage> {
                     value: SettingService.isDark,
                     title: TextWidget(text: 'Change Theme'),
                     onChanged: (value) {
-                      switch (value) {
-                        case true:
-                          injector<SettingService>().changeTheme(theme: DarkTheme());
-                          break;
-                        case false:
-                          injector<SettingService>().changeTheme(theme: LightTheme());
-                          break;
-                        default:
+                      if (value) {
+                        SettingService().changeTheme(theme: DarkTheme());
+                      } else {
+                        SettingService().changeTheme(theme: LightTheme());
                       }
                     },
                   );
@@ -68,7 +64,6 @@ class _SettingPageState extends State<SettingPage> {
               ListTile(
                 title: TextWidget(text: 'Logout'),
                 onTap: () => UserService().authCubit?.logout(),
-                // tileColor: ThemeColor.cardPrimary.color,
               ),
             ],
           ),
