@@ -31,7 +31,7 @@ class UsersList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final user = data[index];
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: ListTile(
                     leading: Stack(
                       children: [

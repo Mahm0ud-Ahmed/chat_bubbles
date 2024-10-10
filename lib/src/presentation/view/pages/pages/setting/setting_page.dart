@@ -25,7 +25,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
-      titleAppBar: 'Home',
+      titleAppBar: 'Settings',
       builder: (context, info) {
         return BlocListener<AuthCubit, ApiDataState>(
           bloc: UserService().authCubit,
