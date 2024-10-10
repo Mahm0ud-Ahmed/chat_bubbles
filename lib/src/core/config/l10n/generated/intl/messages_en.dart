@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Permission to the application has been denied. Unfortunately, you will not be able to complete your task until the permission is granted. Please go to the device settings and grant permission to the application."),
         "alert_dialog_permission_denied_title":
             MessageLookupByLibrary.simpleMessage("Permission denied"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Movie Challenge"),
+        "app_name": MessageLookupByLibrary.simpleMessage("Chat Bubbles"),
         "bad_certificate_message": MessageLookupByLibrary.simpleMessage(
             "Certificate verification failed. Please make sure you\'re connected to a secure network and try again"),
         "bad_gateway_502_message": MessageLookupByLibrary.simpleMessage(

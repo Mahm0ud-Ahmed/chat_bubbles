@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Movie Challenge`
+  /// `Chat Bubbles`
   String get app_name {
     return Intl.message(
-      'Movie Challenge',
+      'Chat Bubbles',
       name: 'app_name',
       desc: '',
       args: [],
