@@ -52,44 +52,48 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
       onPopInvokedWithResult: (isPop, _) {
         widget.onBack?.call();
       },
-      child: SafeArea(
-        maintainBottomViewPadding: true,
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
-        child: Scaffold(
-          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-          extendBody: true,
-          backgroundColor: widget.backgroundColor,
-          appBar: widget.showAppBar!
-              ? PreferredSize(
-                  preferredSize: const Size.fromHeight(kAppBarHeight),
-                  child: AppBar(
-                    centerTitle: false,
-                    elevation: 20,
-                    scrolledUnderElevation: 30,
-                    title: TextWidget(text: widget.titleAppBar!),
-                    systemOverlayStyle: widget.systemOverlayStyle,
-                  ),
-                )
-              : widget.appBar,
-          body: SafeArea(
-            maintainBottomViewPadding: true,
-            child: SizedBox(
-              height: infoPage.screenHeight,
-              width: infoPage.screenWidth,
-              child: CustomPadding(
-                  top: widget.isPadding! ? infoPage.screenWidth * (context.orientationInfo.isPortrait ? 0.03 : 0.01) : 0.0,
-                  start: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
-                  end: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
-                  bottom: !widget.resizeToAvoidBottomInset! ? context.viewInsets.bottom : null,
-                  child: Builder(
-                    builder: (context) {
-                      infoPage = infoPage.copyWith(context: context);
-                      return widget.builder(context, infoPage);
-                    },
-                  )),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: widget.systemOverlayStyle ?? context.customColors.systemUiOverlayStyle,
+        child: SafeArea(
+          maintainBottomViewPadding: true,
+          top: false,
+          bottom: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+            extendBody: true,
+            backgroundColor: widget.backgroundColor,
+            appBar: widget.showAppBar!
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(kAppBarHeight),
+                    child: AppBar(
+                      centerTitle: false,
+                      elevation: 20,
+                      scrolledUnderElevation: 30,
+                      title: TextWidget(text: widget.titleAppBar!),
+                      systemOverlayStyle:
+                          widget.systemOverlayStyle ?? context.customColors.systemUiOverlayStyle,
+                    ),
+                  )
+                : widget.appBar,
+            body: SafeArea(
+              maintainBottomViewPadding: true,
+              child: SizedBox(
+                height: infoPage.screenHeight,
+                width: infoPage.screenWidth,
+                child: CustomPadding(
+                    top: widget.isPadding! ? infoPage.screenWidth * (context.orientationInfo.isPortrait ? 0.03 : 0.01) : 0.0,
+                    start: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                    end: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                    bottom: !widget.resizeToAvoidBottomInset! ? context.viewInsets.bottom : null,
+                    child: Builder(
+                      builder: (context) {
+                        infoPage = infoPage.copyWith(context: context);
+                        return widget.builder(context, infoPage);
+                      },
+                    )),
+              ),
             ),
           ),
         ),
