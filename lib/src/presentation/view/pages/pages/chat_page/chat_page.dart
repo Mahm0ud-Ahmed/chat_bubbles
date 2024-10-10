@@ -28,6 +28,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late final ChatController chatController;
+  late bool isTyping;
   @override
   void initState() {
     super.initState();
@@ -67,6 +68,7 @@ class _ChatPageState extends State<ChatPage> {
                 final data = snapshot.data;
                 return data!.when(
                   success: (data) {
+                    isTyping = data.isTyping!;
                     return Row(
                       children: [
                         DecoratedBox(
@@ -96,7 +98,7 @@ class _ChatPageState extends State<ChatPage> {
                               TextWidget(text: data.userName),
                               .01.space(context).h,
                               TextWidget(
-                                text: data.onlineStatus! ? "Active Now" : data.lastActive!,
+                                text: chatController.getUserState(data),
                                 style: context.labelM,
                               ),
                             ],
@@ -156,7 +158,12 @@ class _ChatPageState extends State<ChatPage> {
                     ChatBottomBarWidget(
                       controller: chatController.message,
                       onSendMessage: chatController.sendMessage,
-                      onWrite: (message) {},
+                      onWrite: (message) {
+                        if (!isTyping) {
+                          chatController.updateUserTyping(true);
+                        }
+                        chatController.handleTypingState(message);
+                      },
                     ),
                   ],
                 );

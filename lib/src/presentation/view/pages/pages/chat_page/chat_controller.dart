@@ -1,5 +1,7 @@
 import 'package:chat_bubbles/src/core/utils/extension.dart';
 import 'package:chat_bubbles/src/core/utils/page_controller.dart';
+import 'package:chat_bubbles/src/data/models/user_model.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart' show BuildContext, Curves, ScrollController, TextEditingController;
 
 import '../../../../../core/config/injector.dart';
@@ -12,6 +14,7 @@ class ChatController implements AppPageController {
   late final ChatUserCubit<String> chatCubit;
   late final ScrollController scrollController;
   String? userId;
+  String? oldKey;
 
   @override
   void initDependencies({BuildContext? context}) {
@@ -27,6 +30,23 @@ class ChatController implements AppPageController {
             (value) => _scrollToEnd(),
           );
       message.clear();
+      updateUserTyping(false);
+    }
+  }
+
+  void updateUserTyping(bool state) {
+    UserService().authCubit?.updateUser({
+      "is_typing": state,
+    });
+  }
+
+  String getUserState(UserModel user) {
+    if (user.isTyping!) {
+      return 'Typing...';
+    } else if (user.onlineStatus!) {
+      return 'Online';
+    } else {
+      return user.lastActive ?? '';
     }
   }
 
@@ -37,6 +57,16 @@ class ChatController implements AppPageController {
       duration: Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
+  }
+
+  void handleTypingState(String? value) {
+    if (oldKey != null) {
+      EasyDebounce.cancel(oldKey ?? '');
+    }
+    oldKey = value;
+    EasyDebounce.debounce(oldKey ?? '', const Duration(seconds: 1), () {
+      updateUserTyping(false);
+    });
   }
 
   @override
