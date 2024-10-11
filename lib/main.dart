@@ -23,6 +23,7 @@ class MainApp extends StatelessWidget {
         listenable: setting,
         builder: (context, child) {
           return MaterialApp(
+            navigatorKey: injector<GlobalKey<NavigatorState>>(),
             debugShowCheckedModeBanner: false,
             title: S.current.app_name,
             theme: setting.theme.theme,
