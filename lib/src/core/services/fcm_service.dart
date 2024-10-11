@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 // Package imports:
@@ -7,15 +8,18 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart' show BuildContext, GlobalKey, NavigatorState;
 import 'package:overlay_support/overlay_support.dart';
+import 'package:http/http.dart' as http;
+import 'package:googleapis_auth/auth_io.dart' as auth;
 
 // Project imports:
+import '../../../credinitial_google_service.dart';
 import '../../presentation/view/common/overlay_alert.dart';
 import '../../presentation/view/common/overlay_body_widget.dart';
 import '../config/injector.dart';
 import '../utils/app_logger.dart';
+import '../utils/enums.dart';
 import '../utils/extension.dart';
 import 'service_interface.dart';
-import 'user_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> onBackgroundMessage(RemoteMessage message) async {}
@@ -25,6 +29,7 @@ class FcmService implements ServiceInterface {
   String? _fcmUserToken;
 
   late final bool notificationPermissionDenied;
+  late final String _googleAccessToken;
 
   StreamController<RemoteMessage>? notificationStream;
 
@@ -32,6 +37,7 @@ class FcmService implements ServiceInterface {
   Future initializeService() async {
     await _initMessaging();
     notificationStream ??= StreamController();
+    _googleAccessToken = await _getAccessToken();
     AppLogger.logDebug('$name Success initialization');
   }
 
@@ -128,16 +134,63 @@ class FcmService implements ServiceInterface {
   }
 
   void _handleMessage(RemoteMessage? message, {bool openApp = false}) {
-    
+    final BuildContext? context = injector<GlobalKey<NavigatorState>>().currentState?.context;
+    if (context != null) {
+      if (openApp) {
+        context.nextNamed(AppRoute.chat.route, argument: message!.data['other_user']);
+      }
+    }
   }
 
-  bool ensureUserAndNotificationIsOrder(RemoteMessage? message) {
-    return UserService.isExistUser &&
-        message != null &&
-        message.data.containsKey('notify_type') &&
-        message.data.containsKey('order_id') &&
-        (message.data['notify_type'] as String).contains('order') &&
-        (message.data['order_id'] as String?).isNotNull;
+  Future<String> _getAccessToken() async {
+    // Define the necessary scopes for Firebase Messaging and Database access
+    List<String> scopes = [
+      "https://www.googleapis.com/auth/firebase.messaging",
+      "https://www.googleapis.com/auth/firebase.database",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ];
+
+    // Load the service account credentials from the JSON (use your correct credentials)
+    var serviceAccountCredentials = auth.ServiceAccountCredentials.fromJson(kServiceAccountInfo);
+
+    // Obtain an authenticated HTTP client with the required scopes
+    final auth.AutoRefreshingAuthClient client = await auth.clientViaServiceAccount(
+      serviceAccountCredentials,
+      scopes,
+    );
+
+    // Access the token
+    String accessToken = client.credentials.accessToken.data;
+    client.close();
+
+    // Log and return the access token
+    AppLogger.logInfo('Google Service Access Token: $accessToken');
+    return accessToken;
+  }
+
+  void sendNotification(
+    String? deviceToken,
+    String? userName,
+    String? otherUser,
+  ) async {
+    String endPointFirebaseCloudMessaging = 'https://fcm.googleapis.com/v1/projects/chatbubbles-c09b5/messages:send';
+
+    final Map<String, dynamic> message = {
+      'message': {
+        'token': deviceToken,
+        'notification': {'title': 'New Message', 'body': "You have a new message from $userName"},
+        'data': {"other_user": otherUser}
+      }
+    };
+
+    final http.Response response = await http.post(Uri.parse(endPointFirebaseCloudMessaging),
+        headers: <String, String>{'Content-Type': "application/json", 'Authorization': 'Bearer $_googleAccessToken'},
+        body: jsonEncode(message));
+    if (response.statusCode == 200) {
+      print('Notification send successfully');
+    } else {
+      print('Send notification faild: ${response.statusCode}');
+    }
   }
 
   // Singleton

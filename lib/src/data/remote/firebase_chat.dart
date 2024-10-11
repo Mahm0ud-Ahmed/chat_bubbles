@@ -1,4 +1,5 @@
 import 'package:chat_bubbles/src/core/error/app_exception.dart';
+import 'package:chat_bubbles/src/core/services/fcm_service.dart';
 import 'package:chat_bubbles/src/core/services/user_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -27,8 +28,12 @@ class FirebaseChat {
       await _firestore.collection('chats').doc(chatId).update({
         'last_message': message,
       });
+
+      // Send Notification to Other user
+      final user = await _getOtherUserData(otherUserUid);
+      FcmService().sendNotification(user?['fcm_token'], UserService.currentUser!.userName, currentUserUid);
     } catch (e) {
-      throw AppException('Failed to send message: $e');
+      throw AppException(e);
     }
   }
 
