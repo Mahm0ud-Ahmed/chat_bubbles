@@ -96,7 +96,7 @@ This project implements a real-time chat interface using Flutter and Firebase. T
 ### Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Mahm0ud-Ahmed/chat_bubbles
+   git clone https://github.com/Mahm0ud-Ahmed/chat_bubbles.git
    ```
 2. Navigate to the project directory:
    ```bash
