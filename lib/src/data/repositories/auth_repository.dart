@@ -14,7 +14,7 @@ class AuthRepositoryImp extends IRemoteRepository {
   @override
   Future<DataState<UserModel>> updateUser(Map<String, dynamic> data) async {
     try {
-      final user = auth.updateUser(data);
+      final user = await auth.updateUser(data);
 
       return DataState<UserModel>.success(UserModel.fromJson(user as Map<String, dynamic>));
     } catch (e) {
