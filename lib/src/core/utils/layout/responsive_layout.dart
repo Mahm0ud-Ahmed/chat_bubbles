@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chat_bubbles/src/core/utils/extension.dart';
 import 'package:chat_bubbles/src/presentation/view/common/text_widget.dart';
 import 'package:flutter/services.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 // Project imports:
 import '../../../presentation/view/common/custom_padding.dart';
 import '../constant.dart';
@@ -60,41 +61,97 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
           bottom: false,
           left: false,
           right: false,
-          child: Scaffold(
-            resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-            extendBody: true,
-            backgroundColor: widget.backgroundColor,
-            appBar: widget.showAppBar!
-                ? PreferredSize(
-                    preferredSize: const Size.fromHeight(kAppBarHeight),
-                    child: AppBar(
-                      centerTitle: false,
-                      elevation: 20,
-                      scrolledUnderElevation: 30,
-                      title: TextWidget(text: widget.titleAppBar!),
-                      systemOverlayStyle:
-                          widget.systemOverlayStyle ?? context.customColors.systemUiOverlayStyle,
+          child: StreamBuilder<InternetConnectionStatus>(
+            stream: InternetConnectionChecker().onStatusChange,
+            builder: (context, snapshot) {
+              if (snapshot.data == InternetConnectionStatus.disconnected) {
+                return Scaffold(
+                  backgroundColor: widget.backgroundColor,
+                  body: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.wifi_off_rounded, size: 100, color: context.customColors.secondary),
+                        TextWidget(text: 'No Internet Connection', style: context.headlineS),
+                      ],
                     ),
-                  )
-                : widget.appBar,
-            body: SafeArea(
-              maintainBottomViewPadding: true,
-              child: SizedBox(
-                height: infoPage.screenHeight,
-                width: infoPage.screenWidth,
-                child: CustomPadding(
-                    top: widget.isPadding! ? infoPage.screenWidth * (context.orientationInfo.isPortrait ? 0.03 : 0.01) : 0.0,
-                    start: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
-                    end: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
-                    bottom: !widget.resizeToAvoidBottomInset! ? context.viewInsets.bottom : null,
-                    child: Builder(
-                      builder: (context) {
-                        infoPage = infoPage.copyWith(context: context);
-                        return widget.builder(context, infoPage);
-                      },
-                    )),
-              ),
-            ),
+                  ),
+                );
+              } else {
+                return Scaffold(
+                  resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                  extendBody: true,
+                  backgroundColor: widget.backgroundColor,
+                  appBar: widget.showAppBar!
+                      ? PreferredSize(
+                          preferredSize: const Size.fromHeight(kAppBarHeight),
+                          child: AppBar(
+                            centerTitle: false,
+                            elevation: 20,
+                            scrolledUnderElevation: 30,
+                            title: TextWidget(text: widget.titleAppBar!),
+                            systemOverlayStyle:
+                                widget.systemOverlayStyle ?? context.customColors.systemUiOverlayStyle,
+                          ),
+                        )
+                      : widget.appBar,
+                  body: SafeArea(
+                    maintainBottomViewPadding: true,
+                    child: SizedBox(
+                      height: infoPage.screenHeight,
+                      width: infoPage.screenWidth,
+                      child: CustomPadding(
+                          top: widget.isPadding! ? infoPage.screenWidth * (context.orientationInfo.isPortrait ? 0.03 : 0.01) : 0.0,
+                          start: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                          end: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                          bottom: !widget.resizeToAvoidBottomInset! ? context.viewInsets.bottom : null,
+                          child: Builder(
+                            builder: (context) {
+                              infoPage = infoPage.copyWith(context: context);
+                              return widget.builder(context, infoPage);
+                            },
+                          )),
+                    ),
+                  ),
+                );
+              }
+              /* return Scaffold(
+                resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                extendBody: true,
+                backgroundColor: widget.backgroundColor,
+                appBar: widget.showAppBar!
+                    ? PreferredSize(
+                        preferredSize: const Size.fromHeight(kAppBarHeight),
+                        child: AppBar(
+                          centerTitle: false,
+                          elevation: 20,
+                          scrolledUnderElevation: 30,
+                          title: TextWidget(text: widget.titleAppBar!),
+                          systemOverlayStyle:
+                              widget.systemOverlayStyle ?? context.customColors.systemUiOverlayStyle,
+                        ),
+                      )
+                    : widget.appBar,
+                body: SafeArea(
+                  maintainBottomViewPadding: true,
+                  child: SizedBox(
+                    height: infoPage.screenHeight,
+                    width: infoPage.screenWidth,
+                    child: CustomPadding(
+                        top: widget.isPadding! ? infoPage.screenWidth * (context.orientationInfo.isPortrait ? 0.03 : 0.01) : 0.0,
+                        start: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                        end: widget.isPadding! ? infoPage.screenWidth * 0.045 : 0.0,
+                        bottom: !widget.resizeToAvoidBottomInset! ? context.viewInsets.bottom : null,
+                        child: Builder(
+                          builder: (context) {
+                            infoPage = infoPage.copyWith(context: context);
+                            return widget.builder(context, infoPage);
+                          },
+                        )),
+                  ),
+                ),
+              ); */
+            }
           ),
         ),
       ),
