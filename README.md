@@ -28,8 +28,8 @@ This project implements a real-time chat interface using Flutter and Firebase. T
 5. **State Management**
    - The app uses Bloc for state management.
 
-6. **Push Notifications (Optional)**
-   - Firebase Cloud Messaging (FCM) is used for push notifications (optional feature).
+6. **Push Notifications**
+   - Firebase Cloud Messaging (FCM) is used for push notifications.
 
 ## Firebase Integration Setup
 
