@@ -9,7 +9,7 @@ import 'package:chat_bubbles/src/presentation/view/common/overlay_alert.dart';
 import 'package:chat_bubbles/src/presentation/view/common/text_widget.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/auth/auth_cubit.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/auth/register/register_controller.dart';
-import 'package:chat_bubbles/src/presentation/view_model/api_data_state.dart';
+import 'package:chat_bubbles/src/presentation/assistant/api_data_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -6,7 +6,7 @@ import '../../../../../../core/config/injector.dart';
 import '../../../../../../core/services/user_service.dart';
 import '../../../../../../core/utils/enums.dart';
 import '../../../../../../data/models/user_model.dart';
-import '../../../../../view_model/api_data_state.dart';
+import '../../../../../assistant/api_data_state.dart';
 import '../../../../common/overlay_alert.dart';
 import '../../../../common/overlay_body_widget.dart';
 

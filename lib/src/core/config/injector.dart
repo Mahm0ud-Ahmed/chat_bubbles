@@ -7,7 +7,7 @@ import 'package:flutter/material.dart' show GlobalKey, NavigatorState, WidgetsFl
 import 'package:get_it/get_it.dart';
 
 import '../../../firebase_options.dart';
-import '../../presentation/view_model/my_bloc_observer.dart';
+import '../../presentation/assistant/my_bloc_observer.dart';
 import '../services/fcm_service.dart';
 import '../services/storage_service.dart';
 

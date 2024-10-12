@@ -7,7 +7,7 @@ import 'package:chat_bubbles/src/presentation/view/common/text_widget.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/pages/chat_page/chat_controller.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/pages/chat_page/widget/chat_bottom_bar_widget.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/pages/chat_page/widget/message_widget.dart';
-import 'package:chat_bubbles/src/presentation/view_model/api_data_state.dart';
+import 'package:chat_bubbles/src/presentation/assistant/api_data_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

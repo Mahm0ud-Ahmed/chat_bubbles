@@ -7,7 +7,7 @@ import 'package:chat_bubbles/src/data/repositories/chat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../data/repositories/interfaces/i_chat_remote_repository.dart';
-import '../../../../view_model/api_data_state.dart';
+import '../../../../assistant/api_data_state.dart';
 
 class HomeCubit<T> extends Cubit<ApiDataState<T>> {
   late final IChatRemoteRepository _chatRepository;

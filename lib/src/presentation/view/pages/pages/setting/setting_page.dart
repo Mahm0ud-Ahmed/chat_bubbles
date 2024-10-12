@@ -8,7 +8,7 @@ import 'package:chat_bubbles/src/core/utils/layout/responsive_layout.dart';
 import 'package:chat_bubbles/src/presentation/view/common/dialog.dart';
 import 'package:chat_bubbles/src/presentation/view/common/text_widget.dart';
 import 'package:chat_bubbles/src/presentation/view/pages/auth/auth_cubit.dart';
-import 'package:chat_bubbles/src/presentation/view_model/api_data_state.dart';
+import 'package:chat_bubbles/src/presentation/assistant/api_data_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
